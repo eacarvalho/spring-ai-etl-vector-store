@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: spring-ai-etl-vector-store
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      embedding:
+        options:
+          model: text-embedding-ada-002
+      chat:
+        options:
+          model: gpt-4.1-2025-04-14
+          temperature: 0.3
+    vectorstore:
+      chroma:
+        client:
+          host: http://localhost
+          port: 8000
+        initialize-schema: true
+        collection-name: my_documents
+
+etl:
+  vector-store:
+    documentsToLoad:
+      - classpath:/docs/v1/Trust in AI – Deploy responsibly, especially in enterprise.pdf
+#      - classpath:/docs/v1/Claude Code - Best practices for agentic coding.pdf
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.springframework.ai: DEBUG
+    org.springframework.ai.chat.client: DEBUG
+    org.springframework.ai.chat.client.observation: DEBUG
+    org.springframework.ai.chat.client.advisor: DEBUG
